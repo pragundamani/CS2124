@@ -85,7 +85,6 @@ int fileRead(vector<string>& encyptedStrings){
         encyptedStrings.push_back(fileLine);
         // cout << fileLine;
     }
-
     return key;
 }
 
