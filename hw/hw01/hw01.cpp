@@ -19,7 +19,6 @@
 #include <cstddef>
 #include <fstream>
 #include <iostream>
-#include <iterator>
 #include <vector>
 #include <string>
 
@@ -56,19 +55,17 @@ char decryptChar(char encryptedChar, int key){
     char returnChar = encryptedChar; //init return var
 
     if (encryptedChar>='A' && encryptedChar <= 'Z'){
-
         //queue logic wrap
         //(current - shift + len)%len and using 'A' to convert char <-> num
-        returnChar = 'A' + (encryptedChar - 'A' - key + 26) % 26;
+        returnChar = 'A' + (encryptedChar - 'A' - key + 26) % 26; 
         // cout << returnChar;
     }
-
     return returnChar;
 }
 
 void decryptString(string& encryptedString, int key){
     //for loop to go through each char
-    for(char encryptedChar: encryptedString){
+    for(char& encryptedChar: encryptedString){
         encryptedChar = decryptChar(encryptedChar, key);
     }
     // cout << encryptedString;
@@ -90,6 +87,6 @@ int fileRead(vector<string>& encyptedStrings){
 
 void printDecrypted(const vector<string>& encryptedStrings){
     for(size_t index = (encryptedStrings.size()-1) ; index>0 ; index--){
-        cout << encryptedStrings[index];
+        cout << encryptedStrings[index] << endl;
     }
 }
