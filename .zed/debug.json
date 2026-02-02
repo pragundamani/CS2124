@@ -1,0 +1,18 @@
+// Project-local debug tasks
+//
+// For more documentation on how to configure debug tasks,
+// see: https://zed.dev/docs/debugger
+
+[
+  {
+    "label": "Debug native binary",
+    "build": {
+      "command": "g++", 
+      "args": ["-std=c++17", "-g", "-O0", "$ZED_FILE", "-o", "$ZED_DIRNAME/$ZED_STEM"],
+      "cwd": "$ZED_DIRNAME",
+    },
+    "program": "$ZED_DIRNAME/$ZED_STEM",
+    "request": "launch",
+    "adapter": "CodeLLDB",
+  },
+]
