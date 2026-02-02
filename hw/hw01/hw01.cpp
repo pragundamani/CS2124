@@ -3,27 +3,14 @@
  hw01.cpp
  Spring 2026
  */
- // Read encrypted.txt (no prompt); first int = rotation (-25..25)
- // Store remaining lines in vector<string> (keep order)
- // Decrypt ONLY 'A'–'Z' with Caesar wraparound; others unchanged
- // Lines are reversed → print vector backwards
- // Functions required:
- //   char decryptChar(char c, int key);
- //   void decryptString(string& s, int key);
- // Output: print the fully DECRYPTED text to standard output
- // Print ONLY decoded lines (no extra text, prompts, or labels)
- // Good style: comments, prototypes, clean formatting
- // Submit a single file: hw01.cpp
 
-
-#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <vector>
 #include <string>
 
 using namespace std;
-
+//prototypes
 char decryptChar(char Encrypted, int key);
 void decryptString(string& s, int key);
 int fileRead(vector<string>& encyptedStrings);
@@ -57,7 +44,7 @@ char decryptChar(char encryptedChar, int key){
     if (encryptedChar>='A' && encryptedChar <= 'Z'){
         //queue logic wrap
         //(current - shift + len)%len and using 'A' to convert char <-> num
-        returnChar = 'A' + (encryptedChar - 'A' - key + 26) % 26; 
+        returnChar = 'A' + (encryptedChar - 'A' - key + 26) % 26;
         // cout << returnChar;
     }
     return returnChar;
@@ -86,7 +73,8 @@ int fileRead(vector<string>& encyptedStrings){
 }
 
 void printDecrypted(const vector<string>& encryptedStrings){
-    for(size_t index = (encryptedStrings.size()-1) ; index>0 ; index--){
-        cout << encryptedStrings[index] << endl;
+    //create for loop to print strings from vector
+    for(string encString : encryptedStrings){
+        cout << encString << endl;
     }
 }
