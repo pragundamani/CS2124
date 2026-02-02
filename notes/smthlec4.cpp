@@ -1,6 +1,7 @@
 // lec 4 notes
 
 #include <iostream>
+#include <ostream>
 #include <string>
 
 using namespace std;
@@ -8,6 +9,8 @@ using namespace std;
 // in struct everything is by default public
 // in class everything by default is private
 class Person {
+    // by marking it as a friend we make it same acces rights as a method
+    friend ostream& operator<<(ostream& os /*any name*/, const Person& aPerson);
 public:
     // Person(const string& aName)/*this spot is called the initialization list*/ {
         //all non primitives are constructed at that point ^^
@@ -31,6 +34,7 @@ public:
     //by putting keyword const compiler knows its safe
     const string& getName() const { return name; } //no compile since called on an immutable object
     // if there is no reason to modify anything within a method mark it is as const
+    // its only in methods
 
 private:
     string name;
