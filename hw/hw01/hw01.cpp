@@ -13,7 +13,7 @@ using namespace std;
 //prototypes
 char decryptChar(char Encrypted, int key);
 void decryptString(string& s, int key);
-int fileRead(vector<string>& encyptedStrings);
+int fileRead(vector<string>& encryptedStrings);
 void printDecrypted(const vector<string>& encryptedStrings);
 
 int main(){
@@ -35,10 +35,11 @@ int main(){
 
     printDecrypted(encryptedStrings);
 
-    return 0; //end of program
+    return 0; 
 }
 
-char decryptChar(char encryptedChar, int key){
+//using int as const to not change
+char decryptChar(char encryptedChar, const int key){
     char returnChar = encryptedChar; //init return var
 
     if (encryptedChar>='A' && encryptedChar <= 'Z'){
@@ -50,7 +51,8 @@ char decryptChar(char encryptedChar, int key){
     return returnChar;
 }
 
-void decryptString(string& encryptedString, int key){
+//using int as const to not change
+void decryptString(string& encryptedString, const int key){ 
     //for loop to go through each char
     for(char& encryptedChar: encryptedString){
         encryptedChar = decryptChar(encryptedChar, key);
@@ -58,23 +60,30 @@ void decryptString(string& encryptedString, int key){
     // cout << encryptedString;
 }
 
-int fileRead(vector<string>& encyptedStrings){
+int fileRead(vector<string>& encryptedStrings){
     ifstream encrypted("encrypted.txt"); //file to read
     int key = 0; //created var key
     string fileLine; //created temp var for string storage
-
+    if (!encrypted){
+        cerr << "file not opened";
+        exit(1);
+    }
     encrypted >> key; //put the key from encrypted into the var
     // cout << key;
     while(getline(encrypted,fileLine)){
-        encyptedStrings.push_back(fileLine);
+        encryptedStrings.push_back(fileLine);
         // cout << fileLine;
     }
+    encrypted.close();
     return key;
 }
 
 void printDecrypted(const vector<string>& encryptedStrings){
     //create for loop to print strings from vector
-    for(string encString : encryptedStrings){
-        cout << encString << endl;
+    for(size_t index = encryptedStrings.size()-1; index > 0 ; index--){
+        cout << encryptedStrings[index];
+        if (index>1){
+            cout << endl;
+        }
     }
 }
