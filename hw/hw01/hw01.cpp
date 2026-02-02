@@ -81,9 +81,12 @@ int fileRead(vector<string>& encryptedStrings){
 void printDecrypted(const vector<string>& encryptedStrings){
     //create for loop to print strings from vector
     for(size_t index = encryptedStrings.size()-1; index > 0 ; index--){
+        //outputs strings in the reverse order since we backtrack on index
         cout << encryptedStrings[index];
+        //only outputs endl during first 3 lines of text
         if (index>1){
             cout << endl;
+        //matches output.txt exactly
         }
     }
 }
