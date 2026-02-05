@@ -10,16 +10,19 @@ using namespace std;
 // in class everything by default is private
 class Person {
     // by marking it as a friend we make it same acces rights as a method
+    // use friend very sparingly (dont break encapsulation)
     friend ostream& operator<<(ostream& os /*any name*/, const Person& aPerson);
 public:
     // Person(const string& aName)/*this spot is called the initialization list*/ {
         //all non primitives are constructed at that point ^^
     //if you dont make an initialization list all non-primitives and contructed
 
-    // Person(const string& aName) : name(aName)/*init list*/{
+     // Person(const string& aName) : name(aName)/*init list*/{
+    //                 init list  \/ is parameter
     Person(const string& name) : name(name){
+         //                            /\ compiler searches scope for name (or other variable)
         //no return type on constructors
-        // name = aName;
+       // name = aName;
 
     }
 
@@ -45,6 +48,7 @@ void personEating(const Person& aPerson){
     cout << aPerson.getName() << " eating\n";
 }
 
+//ostream is not copy-able so it is always passed by reference
 ostream& operator<<(ostream& os /*any name*/, const Person& aPerson){
     os << "Person: " << aPerson.getName();
     return os;
