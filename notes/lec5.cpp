@@ -42,7 +42,7 @@ class Person {
     friend ostream& operator<<(ostream& os, const Person::Date& rhs);
     };
 
-
+    public:
 
     Person(const string& name , int m, int d, int y)
     : name(name), bday(m,d,y) /*creates a constructor where it takes values from the person init*/

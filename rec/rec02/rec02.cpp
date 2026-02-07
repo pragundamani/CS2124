@@ -4,7 +4,6 @@ Pragun Damani pd2752
   spring 2026
 */
 
-#include <cstddef>
 #include <iterator>
 #include <string>
 #include <vector>
