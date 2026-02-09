@@ -23,8 +23,9 @@ struct Account {
 // Task 2
 // Define an Account class (use a different name than in Task 1)
 class ClassyAccounts{
-    friend ostream& operator<<(ostream& os, const ClassyAccounts& classyaccount);
-    string holderName;
+friend ostream& operator<<(ostream& os, const ClassyAccounts& classyaccount); //output operator at bottom
+    //basic account fields
+    string holderName; 
     int accNum = 0;
 public:
 
@@ -41,15 +42,17 @@ ostream& operator<<(ostream& os, const ClassyAccounts& classyaccount);
 // defined outside of the Account class, i.e. it is not "nested".
 
 class Transaction {
-    friend ostream& operator<<(ostream& os, const Transaction& transaction);
+    friend ostream& operator<<(ostream& os, const Transaction& transaction); //output operator at bottom
 public:
+    //one transaction record
     string transType;
     int amount = 0;
     Transaction(const string& transType, int amount):transType(transType),amount(amount){ }
 };
 
 class ClassyTransactAccount{
-    friend ostream& operator<<(ostream& os, const ClassyTransactAccount& output);
+    friend ostream& operator<<(ostream& os, const ClassyTransactAccount& output); //output operator at bottom
+    //account state + history
     string holderName;
     int accNum = 0;
     int balance = 0;
@@ -61,12 +64,14 @@ class ClassyTransactAccount{
     int getAccNum()const{return accNum;}
 
     void deposit(int amount){
+        //add money and log it
         balance += amount;
         Transaction addToHist("deposit",amount);
         transHist.push_back(addToHist);
     }
 
     void withdrawal(int amount){
+        //withdraw only if enough funds
         if(balance<amount){
             cout << "transaction cannot go through";
         }
@@ -87,15 +92,16 @@ ostream& operator<<(ostream& os, const Transaction& transaction);
 // the Transaction class, since it is nested.
 class NestedClassyTransactAccount{
 public:
+    //nested transaction type (public)
     class NestedTransaction {
-                friend ostream& operator<<(ostream& os, const NestedClassyTransactAccount::NestedTransaction& transaction);
+                friend ostream& operator<<(ostream& os, const NestedClassyTransactAccount::NestedTransaction& transaction); //output operator at bottom
         public:
             string transType;
             int amount = 0;
             NestedTransaction(const string& transType, int amount):transType(transType),amount(amount){ }
         };
 private:
-friend ostream& operator<<(ostream& os, const NestedClassyTransactAccount& outputAccount);
+friend ostream& operator<<(ostream& os, const NestedClassyTransactAccount& outputAccount); //output operator at bottom
     string holderName;
     int accNum = 0;
     int balance = 0;
@@ -122,7 +128,7 @@ public:
             NestedTransaction addToHist("withdrawal",amount);
             transHist.push_back(addToHist);
         }
-
+    }
 };
 
 // Task 5
@@ -133,14 +139,15 @@ public:
 
 int main()
 {
-    // Task 1: account as struct
+    //task 1: struct-based accounts
+    //task 1: account as struct
     //      1a
     cout << "Task1a:\n"
          << "Filling vector of struct objects, define a local struct instance\n"
          << "and set fields explicitly:\n";
 
     vector<Account> accountsVect;
-    ifstream externalAccounts("accounts.txt");
+    ifstream externalAccounts("accounts.txt"); //    if below check file opened
     string tempAccountName;
     int tempAccountNumber;
     Account tempAccount;
@@ -168,7 +175,7 @@ int main()
          << "Filling vector of struct objects, using {} initialization:\n";
 
     accountsVect.clear();
-    externalAccounts.open("accounts.txt");
+    externalAccounts.open("accounts.txt"); //if below checks file opened
 
     if (!externalAccounts){
             cerr << "accounts not found";
@@ -196,7 +203,7 @@ int main()
     cout << "\nTask2a:"
          << "\nFilling vector of class objects, using local class object:\n";
     vector<ClassyAccounts> classyAccountsVect;
-    externalAccounts.open("accounts.txt");
+    externalAccounts.open("accounts.txt"); //if below checks file opened
 
     if (!externalAccounts){
                 cerr << "accounts not found";
@@ -237,7 +244,7 @@ int main()
          << "Filling vector of class objects, using temporary class object:\n";
     classyAccountsVect.clear();
 
-    externalAccounts.open("accounts.txt");
+    externalAccounts.open("accounts.txt"); //if below checks file opened
 
         if (!externalAccounts){
                     cerr << "accounts not found";
@@ -261,7 +268,7 @@ int main()
          << "Filling vector of class objects, using emplace_back:\n";
          classyAccountsVect.clear();
 
-         externalAccounts.open("accounts.txt");
+         externalAccounts.open("accounts.txt"); //if below checks file opened
 
             if (!externalAccounts){
                          cerr << "accounts not found";
@@ -283,7 +290,8 @@ int main()
     cout << "==============\n"
         << "\nTask 3:\nAccounts and Transaction:\n";
 
-    ifstream transactions("transactions.txt");
+    //task 3: process account transactions
+    ifstream transactions("transactions.txt"); //if below checks file opened
     vector<ClassyTransactAccount> classyTranactsVect;
     string token,name;
     int accNum = 0, amount = 0;
@@ -292,14 +300,16 @@ int main()
         cerr<<"file not found";
          exit(1);
     }
-    while(transactions>>token){
+    while(transactions>>token){ //read each transaction 
         if (token == "Account"){
+           //create and store new account
            transactions >> name >> accNum;
            ClassyTransactAccount pushToVect(name,accNum);
            classyTranactsVect.push_back(pushToVect);
            cout << "added account " << name << " account number " << accNum << endl;
         }
         else if(token == "Deposit"){
+            //find account and apply deposit
             transactions >> accNum >> amount;
             for(ClassyTransactAccount& ind_acc: classyTranactsVect){
                 if (accNum == ind_acc.getAccNum()){
@@ -309,6 +319,7 @@ int main()
             }
         }
         else if (token == "Withdraw"){
+            //find account and apply withdrawal
             transactions >> accNum >> amount;
             for(ClassyTransactAccount& ind_acc: classyTranactsVect){
                 if (accNum == ind_acc.getAccNum()){
@@ -324,21 +335,24 @@ int main()
 
 
     cout << "==============\n" << "\nTask 4:\nTransaction nested in public section of Account:\n";
-    transactions.open("transactions.txt");
+    //task 4: same flow with nested transaction class 
+    transactions.open("transactions.txt"); //if checks file opened              
     vector<NestedClassyTransactAccount> nestedclassyTranactsVect;
 
     if (!transactions){
         cerr<<"file not found";
          exit(1);
     }
-    while(transactions>>token){
+    while(transactions>>token){ //read each transaction
         if (token == "Account"){
+           //create and store new account
            transactions >> name >> accNum;
            NestedClassyTransactAccount pushToVect(name,accNum);
            nestedclassyTranactsVect.push_back(pushToVect);
            cout << "added account " << name << " account number " << accNum << endl;
         }
         else if(token == "Deposit"){
+            //find account and apply deposit    
             transactions >> accNum >> amount;
             for(NestedClassyTransactAccount& ind_acc: nestedclassyTranactsVect){
                 if (accNum == ind_acc.getAccNum()){
@@ -348,6 +362,7 @@ int main()
             }
         }
         else if (token == "Withdraw"){
+            //find account and apply withdrawal   
             transactions >> accNum >> amount;
             for(NestedClassyTransactAccount& ind_acc: nestedclassyTranactsVect){
                 if (accNum == ind_acc.getAccNum()){
