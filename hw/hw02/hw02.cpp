@@ -1,43 +1,153 @@
 /*
-Name: [Your Name]
-Assignment: hw02 - functions, structs, vectors
-Course: Object Oriented Programming Spring 2026 - NYU
-File: hw02.cpp
-Purpose: Battle simulator using functions, structs, vectors, and file I/O.
+ Pragun Damani: pd2752
+ hw02.cpp
+ Spring 2026
+ */
 
-Summary of required behavior:
-- Read commands from "warriors.txt" (do not prompt user for filename).
-- Commands:
-  - Warrior <name> <strength>: add a new warrior (unique names only).
-  - Battle <name1> <name2>: resolve a battle and print results.
-  - Status: print count and list of all warriors with strengths.
-- Execute commands in order as they are read.
-- Output formatting should match the assignment sample exactly for normal cases.
-- Error cases:
-  - Duplicate Warrior name: do not add; print an error message.
-  - Battle with undefined warrior(s): do not battle; print an error message.
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
 
-Battle rules:
-- Each warrior has name and strength.
-- If both warriors are dead (strength 0):
-  - Print: "Oh, NO! They're both dead! Yuck!"
-- If one is dead and the other alive:
-  - Print: "He's dead, <living warrior name>"
-- If both alive:
-  - Equal strength: both strengths become 0; print:
-    "Mutual Annihilation: <name1> and <name2> die at each other's hands"
-  - Unequal strength: stronger wins, weaker becomes 0, winner loses amount
-    equal to weaker's strength; print:
-    "<winner> defeats <loser>"
+using namespace std;
 
-Implementation requirements / style notes:
-- Use structs (no classes, no constructors, no data hiding).
-- Use functions and function prototypes so main appears first.
-- Use vectors to store warriors.
-- Keep lines <= 80 characters, good indentation, good naming.
-- Include comments for known issues (if any).
+struct Warrior {
+    string name;
+    int strength; //using strength name 
+};
 
-Due date: Feb 9, 2026 11:59 PM
-*/
+// prototypes
+void commands(ifstream& warriorStream, vector<Warrior>& warriors);
+void warriorCommand(vector<Warrior>& warriors, const string& name,
+                    int strength);
+void battleCommand(vector<Warrior>& warriors, const string& firstName,
+                   const string& secondName);
+void statusCommand(const vector<Warrior>& warriors);
+size_t findWarrior(const vector<Warrior>& warriors, const string& name);
 
-// Intentionally left incomplete per instructions.
+
+int main() {
+    vector<Warrior> warriors; //stores all warriors from file
+    ifstream warriorStream("warriors.txt"); //input file
+    if (!warriorStream) {
+        cerr << "Error: could not open warriors.txt" << endl;
+        exit(1);
+    }
+
+    //read and execute commands in order
+    commands(warriorStream, warriors);
+
+    return 0;
+}
+
+void commands(ifstream& warriorStream, vector<Warrior>& warriors) {
+    string command; //temp var for each command
+    while (warriorStream >> command) {
+        //read fields that belong current command
+        if (command == "Warrior") {
+            string warriorName;
+            int warriorStrength = 0;
+            warriorStream >> warriorName >> warriorStrength;
+            warriorCommand(warriors, warriorName, warriorStrength);
+        }
+
+        else if (command == "Battle") {
+            string firstName;
+            string secondName;
+            warriorStream >> firstName >> secondName;
+            battleCommand(warriors, firstName, secondName);
+        }
+
+        else if (command == "Status") {
+            statusCommand(warriors);
+        }
+    }
+}
+
+void warriorCommand(vector<Warrior>& warriors,
+    const string& name,int strength){
+        // 
+    //duplicate warrior names are not allowed
+    if (findWarrior(warriors, name) != warriors.size()) {
+        cerr << "Error: warrior " << name << " already exists" << endl;
+        return;
+    }
+
+    //create new warrior and add to vector
+    Warrior warrior;
+    warrior.name = name;
+    warrior.strength = strength;
+    warriors.push_back(warrior);
+}
+
+void battleCommand(vector<Warrior>& warriors, const string& firstName,
+                   const string& secondName) {
+    //first output line for battle
+    cout << firstName << " battles " << secondName << endl;
+
+    //look up both warriors by name
+    size_t firstIndex = findWarrior(warriors, firstName);
+    size_t secondIndex = findWarrior(warriors, secondName);
+    if (firstIndex == warriors.size() || secondIndex == warriors.size()) {
+        cerr << "Error: invalid battle between " << firstName << " and "
+             << secondName << endl;
+        return;
+    }
+
+    //references so strength updates modify vector directly
+    Warrior& firstWarrior = warriors[firstIndex];
+    Warrior& secondWarrior = warriors[secondIndex];
+
+    //follow assignment battle rules
+    if (firstWarrior.strength == 0 && secondWarrior.strength == 0) {
+        cout << "Oh, NO! They're both dead! Yuck!" << endl;
+    }
+
+    else if (firstWarrior.strength == 0) {
+        cout << "He's dead, " << secondWarrior.name << endl;
+    }
+
+    else if (secondWarrior.strength == 0) {
+        cout << "He's dead, " << firstWarrior.name << endl;
+    }
+
+    else if (firstWarrior.strength == secondWarrior.strength) {
+        firstWarrior.strength = 0;
+        secondWarrior.strength = 0;
+        cout << "Mutual Annihilation: " << firstWarrior.name << " and "
+             << secondWarrior.name << " die at each other's hands" << endl;
+    }
+
+    else if (firstWarrior.strength > secondWarrior.strength) {
+        firstWarrior.strength -= secondWarrior.strength;
+        secondWarrior.strength = 0;
+        cout << firstWarrior.name << " defeats " << secondWarrior.name << endl;
+    }
+
+    else {
+        secondWarrior.strength -= firstWarrior.strength;
+        firstWarrior.strength = 0;
+        cout << secondWarrior.name << " defeats " << firstWarrior.name << endl;
+    }
+}
+
+void statusCommand(const vector<Warrior>& warriors) {
+    //status output  
+    cout << "There are: " << warriors.size() << " warriors" << endl;
+    //ranged for loop to print each warrior 
+    for (const Warrior& warrior : warriors) {
+        cout << "Warrior: " << warrior.name
+             << ", strength: " << warrior.strength << endl;
+    }
+}
+
+size_t findWarrior(const vector<Warrior>& warriors, const string& name) {
+    //search data in vector
+    for (size_t index = 0; index < warriors.size(); ++index) {
+        if (warriors[index].name == name) {
+            return index;
+        }
+    }
+    //if not found, return size
+    return warriors.size();
+}
