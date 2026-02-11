@@ -18,6 +18,7 @@ int main() {
     //dont pass pointers by constant reference
     
     //use new keyword to initialize a new object when adding references to a vector
-    //  
+    //if you use new use delete to free it up new has to go with delete
+    //delete frees up pointers contents,  
 }
 
