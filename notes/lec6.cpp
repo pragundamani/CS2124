@@ -6,12 +6,15 @@ class Person {
 public: 
     Person(const string& name) : name(name), spouse(nullptr) { }
     
-    void marries(Person& bethrothed){
-        spouse = &bethrothed;
-        bethrothed.spouse = this;
-        // isMarried = true;
-        // bethrothed.isMarried = true;
-        cout << name << " married " << bethrothed.name << endl; 
+    bool marries(Person& bethrothed){
+        if (spouse == nullptr && bethrothed.spouse == nullptr){
+            spouse = &bethrothed;
+            bethrothed.spouse = this; //this is a pointer which holds the address
+            //a reference is an alias for something a pointer is the memory address
+            cout << name << " married " << bethrothed.name << endl;
+            return true;
+        }
+        return false;
     }
     
 private:
