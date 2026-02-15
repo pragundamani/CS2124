@@ -1,0 +1,20 @@
+There are: 5 warriors
+Warrior: Jim; Weapon: Glamdring, strength: 42
+Warrior: Lancelot; Weapon: Naegling, strength: 15
+Warrior: Arthur; Weapon: Excalibur, strength: 15
+Warrior: Torvalds; Weapon: Narsil, strength: 20
+Warrior: Gates; Weapon: Orcrist, strength: 8
+Arthur battles Lancelot
+Mutual Annihalation: Arthur and Lancelot die at each other's hands
+Jim battles Lancelot
+He's dead, Jim
+Torvalds battles Gates
+Torvalds defeats Gates
+Gates battles Lancelot
+Oh, NO!  They're both dead!  Yuck!
+There are: 5 warriors
+Warrior: Jim; Weapon: Glamdring, strength: 42
+Warrior: Lancelot; Weapon: Naegling, strength: 0
+Warrior: Arthur; Weapon: Excalibur, strength: 0
+Warrior: Torvalds; Weapon: Narsil, strength: 12
+Warrior: Gates; Weapon: Orcrist, strength: 0
