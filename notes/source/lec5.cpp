@@ -1,5 +1,12 @@
+/*
+PD
+lec5.cpp
+Spring 2026
+*/
+
 #include <iostream>
 using namespace std;
+
 // the main difference between a class and a struct is the default access, structs are public classes are private
 
 // class Date {
@@ -81,7 +88,8 @@ ostream& operator<<(ostream& os, const Person& rhs) {
 // }
 
 //  the :: means scope resolution operator
-ostream& operator<<(ostream& os, const Person::Date& rhs) {
-    os << rhs.month << "/" << rhs.day << "/" << rhs.year;
-    return os;
-}
+
+// ostream& operator<<(ostream& os, const Person::Date& rhs) {
+//     os << rhs.month << "/" << rhs.day << "/" << rhs.year;
+//     return os;
+// }

@@ -4,7 +4,7 @@
 Standardize how this repo handles:
 - image storage in `imgs/`
 - C++ lecture breakdown markdown files
-- C++ source placement in `source/`
+- C++ source placement in `source/` (aside from most recent lec)
 - image references inside C++ where needed
 
 ## 1) Move Images to `imgs/`

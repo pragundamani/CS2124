@@ -1,4 +1,8 @@
-// lec 4 notes
+/*
+PD
+lec4.cpp
+Spring 2026
+*/
 
 #include <iostream>
 #include <ostream>
