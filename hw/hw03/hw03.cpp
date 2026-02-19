@@ -69,7 +69,7 @@ void Warrior::battle(Warrior& opponent) {
         this->setStrength(0);
         opponent.setStrength(0);
         cout << "Mutual Annihilation: " << this->getName() << " and "
-             << opponent.getName() << " die at each other's hands" << endl;
+             << opponent.getName() << " die at each other's hands" << endl;    
     }
     else if (this->getStrength() > opponent.getStrength()) {
         this->setStrength(this->getStrength() - opponent.getStrength());
