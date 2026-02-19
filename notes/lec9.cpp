@@ -27,5 +27,5 @@ private:
 };
 
 int main(){
-    Vector<int> v; //
+    // Vector<int> v; //
 }
