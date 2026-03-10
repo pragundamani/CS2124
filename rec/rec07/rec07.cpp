@@ -151,22 +151,7 @@ int main()
 
     cout << "Comparisons\n";
     Rational twoFifths(2, 5);
-    Rational threeHalves(3, 2);
-    Rational minusFive(-5);
-    cout << twoFifths << " < " << threeHalves << " : "
-         << (twoFifths < threeHalves) << endl;
-    cout << twoFifths << " <= " << 1 << " : " << (twoFifths <= 1) << endl;
-    cout << threeHalves << " < " << twoFifths << " : "
-         << (threeHalves < twoFifths) << endl;
-    cout << threeHalves << " > " << threeHalves << " : "
-         << (threeHalves > threeHalves) << endl;
-    cout << threeHalves << " >= " << threeHalves << " : "
-         << (threeHalves >= threeHalves) << endl;
-    cout << minusFive << " >= " << threeHalves << " : "
-         << (minusFive >= threeHalves) << endl;
-} // main
-
-int greatestCommonDivisor(int x, int y) {
+    Rational threeHalvesher(int x, int y) {
     while (y != 0) {
         int temp = x % y;
         x = y;
