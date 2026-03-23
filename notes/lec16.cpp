@@ -4,6 +4,7 @@ lec16.cpp
 Spring 2026
 */
 
+#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -11,6 +12,7 @@ using namespace std;
 class Pet {
 public:
     Pet (const string& name) : name(name) { }
+    Pet (){}
 
     //void eat() { cout << "Eating \n"; } 
     virtual void eat() { cout << "Eating \n"; }
@@ -58,4 +60,29 @@ int main(){
 	
     felix.eat(); //code reuse
 	someFunc(felix); //Principle of Substitutability (Barbara Liskov, turing award winner)
+
+    Slug sluggo;
+    Roach archie;
+
+    vector<Pet> menagerie;
+    menagerie.push_back(peeve);
+    menagerie.push_back(felix);
+    menagerie.push_back(sluggo);
+    menagerie.push_back(archie);
+
+    for (size_t i =0; i<menagerie.size(); i++){
+        menagerie[i].eat();
+    }
+
+    cout << "\n ============= \n";
+
+    vector<Pet*> menagerie2;
+        menagerie2.push_back(&peeve);
+        menagerie2.push_back(&felix);
+        menagerie2.push_back(&sluggo);
+        menagerie2.push_back(&archie);
+
+        for (size_t i =0; i<menagerie2.size(); i++){
+            menagerie2[i]->eat();
+        }
 }
