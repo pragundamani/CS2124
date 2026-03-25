@@ -1,1 +1,3 @@
-- [ ] what happens when theres a lot of class layers
+- [ ] is the class ':' like an initialization list
+- [ ] can we mark a method cosnt const and final both?
+- [ ] can we mark an abstract method const 

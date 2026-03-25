@@ -16,10 +16,13 @@ public:
 
     //void eat() { cout << "Eating \n"; } 
     virtual void eat() { cout << "Eating \n"; }
+
+    const string& getName() const { return name; }
 private:
     string name;
 };
 
+//class Cat final : public Pet { //mark final before adding other classes not after
 class Cat : public Pet {
 public:
     //Cat (const string& name) : name(name) { } //cannot innitialize because name is a pet fild not cat field
@@ -27,11 +30,14 @@ public:
     //cat cannot access private items in base class so we need to use setters and getters later
 
     //void eat() { cout << "Cat eating \n"; }
+	//void eat() override { //override is used for overwriting a method and helps catch errors
 	void eat() {
 		cout << "Cat ";
         //eat() //infinite recursionc alling cat::eat
         Pet::eat();
     }
+    //void purr() { cout << name << " purr\n"; } name is a private field of pet
+    //do not have fields in a class that are not private
     void purr() { cout << "cat purr \n"; }
 
 
@@ -73,8 +79,6 @@ int main(){
     for (size_t i =0; i<menagerie.size(); i++){
         menagerie[i].eat();
     }
-
-    cout << "\n ============= \n";
 
     vector<Pet*> menagerie2;
         menagerie2.push_back(&peeve);
