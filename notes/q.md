@@ -1,3 +1,6 @@
 - [ ] is the class ':' like an initialization list
 - [ ] can we mark a method cosnt const and final both?
 - [ ] can we mark an abstract method const 
+- [ ] what does `TA(const string& name): Person(name), Student(name), Instructor(name){}` what does this constructor do in order to solve the diamond inheritenc issue
+- [ ] why did the vector beat the linkedlsit in speed, what is the implmentation difference?
+- [ ] what is the argument for using setters \cap getters instead of a struct for implmentation of data structures? 
