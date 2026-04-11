@@ -1,11 +1,12 @@
 /*
-  rec11_start.cpp
-
+  Pragun Damani
+  rec11.cpp
   Test code for students to use for the linked list basics
   recitation.
 */
 
 #include <iostream>
+#include <ostream>
 #include <string>
 #include <vector>
 #include <unordered_set>
@@ -48,9 +49,9 @@ const Node* isSublist(const Node* pattern, const Node* target);
 
 // providing a "dummy" implementation so that this starter program
 // will compile.
-const Node* isSublist(const Node* pattern, const Node* target) {
-    return nullptr;
-}
+// const Node* isSublist(const Node* pattern, const Node* target) {
+//     return nullptr;
+// }
 
 // test the nodes in listB looking for the first one to match a node
 // from listA. Note that we are matching the addresses of the nodes,
@@ -96,7 +97,6 @@ int main() {
     cout << "original after: ";
     listPrint(original);
 
-    /*
     cout << "=====================\n\n"
          << "Part two: \n\n";
 
@@ -196,7 +196,7 @@ int main() {
         delete p;
         p = pNext;
     }
-    */
+
 } // main
 
 //
@@ -268,15 +268,81 @@ Node* reverse(const Node* hp){
 void reverseInPlace(Node*& hp){
     Node* curr = hp;
     Node* prev = nullptr;
-    Node* next = curr->next;
-    cout << curr->data;
+    Node* nextNode = curr;
     while (curr != nullptr){
-        cout << curr->data;
+        nextNode = curr->next;
+        // cout << curr->data << endl;
         curr->next = prev;
         prev = curr;
-        curr = next;
-        next = next->next;
+        curr = nextNode;
     }
-    curr->next=prev;
-    hp = curr;
+    hp = prev;
+}
+
+
+const Node* isSublist(const Node* pattern, const Node* target){
+    const Node* start = nullptr;
+    const Node* patternCurr = pattern;
+    const Node* curr = target;
+    if(patternCurr == nullptr){
+        return target;
+    }
+    while(curr!=nullptr){
+        if(curr->data == patternCurr->data){
+            start = curr;
+            const Node* checkPatternCurr = pattern;
+            const Node* checkCurr = curr;
+            while(checkCurr!=nullptr){
+                // cout << checkPatternCurr->data;
+                // cout << checkCurr->data << endl;
+                if (!(checkCurr->data == checkPatternCurr->data)){
+                    break;
+                }
+                else{
+                    checkCurr = checkCurr->next;
+                    checkPatternCurr = checkPatternCurr->next;
+                }
+                if(checkPatternCurr == nullptr){
+                    return start;
+                }
+            }
+        }
+        curr = curr->next;
+    }
+    cout << "Failed to match ";
+    return nullptr;
+}
+
+
+const Node* sharedListBruteForce(const Node* listA, const Node* listB){
+    const Node* aPointr = listA;
+    const Node* bPointr = listB;
+    while(aPointr!=nullptr){
+       while(bPointr!=nullptr){
+           if (aPointr == bPointr){
+               return aPointr;
+           }
+           bPointr = bPointr->next;
+        }
+       aPointr = aPointr->next;
+       bPointr = listB;
+    }
+    return nullptr;
+}
+
+const Node* sharedListUsingSet(const Node* listA, const Node* listB){
+    unordered_set<const Node*> nodes;
+    const Node* aPointr = listA;
+    const Node* bPointr = listB;
+    while(aPointr != nullptr){
+        nodes.insert(aPointr);
+        aPointr = aPointr->next;
+    }
+    while(bPointr != nullptr){
+        if (nodes.find(bPointr)!=nodes.end()){
+            return bPointr;
+        }
+        bPointr = bPointr->next;
+    }
+    return nullptr;
 }
