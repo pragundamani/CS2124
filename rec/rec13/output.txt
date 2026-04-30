@@ -1,0 +1,97 @@
+bash-3.2$ ./rec13 
+Task 1:
+21 1 13 8 5 34 2 1 
+=======
+Task 2:
+21 1 13 8 5 34 2 1 
+=======
+Task 3:
+1 1 2 5 8 13 21 34 
+21 1 13 8 5 34 2 1 
+=======
+Task 4:
+1 2 8 21 
+=======
+Task 5:
+
+=======
+Task 6:
+1 2 8 21 
+=======
+Task 7:
+21 13 5 2 
+=======
+Task 8:
+1 1 2 5 8 13 21 34 
+=======
+Task 9:
+1 1 2 5 8 13 21 34 
+=======
+Task 10:
+1 1 2 5 8 13 21 34 
+=======
+Task 11:
+1 2 8 21 
+=======
+Task 12:
+Found 13
+Could not find 12
+=======
+Task 13:
+Found 13
+Could not find 12
+=======
+Task 14:
+Found 13
+Could not find 12
+=======
+Task 15:
+Found: 2
+Found: 2
+=======
+Task 16:
+Found: 2
+=======
+Task 17:
+Please enter the value for the divisor: 4
+Found: 8
+=======
+Task 18:
+Found 13
+Could not find 12
+=======
+Task 19:
+In ourFind
+Found 13
+In ourFind
+Could not find 12
+=======
+Task 20:
+In templated ourFind
+Found 13
+In templated ourFind
+Could not find 12
+In ourFind
+Found 13
+In ourFind
+Could not find 12
+=======
+Task 21:
+Number of distinct words: 2278
+Introduction IF you
+...
+ 
+=======
+Task 22:
+Number of distinct words: 2278
+1 10 11 2 3 4 5 6 7 8 9 A AN ANXIOUS AS About
+...
+ 
+=======
+Task 23:
+Number of distinct words: 2278
+Later: 22404
+Over-rated: 22394
+...
+
+=======
