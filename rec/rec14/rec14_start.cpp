@@ -3,7 +3,10 @@
  */
 
 #include <algorithm> // max
+#include <climits>
+#include <exception>
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 using namespace std;
 
@@ -35,24 +38,75 @@ Node *listBuild(const vector<int> &vals);
 //   Task 1 function:
 //
 Node *listSum(const Node *listOne, const Node *listTwo) {
+  if (listOne == nullptr && listTwo == nullptr)
+    return nullptr;
   int sum = 0;
-  if (listOne != nullptr)
+  Node *one = nullptr;
+  Node *two = nullptr;
+  if (listOne != nullptr) {
     sum += listOne->data;
-  if (listTwo != nullptr)
+    one = listOne->next;
+  }
+  if (listTwo != nullptr) {
     sum += listTwo->data;
+    two = listTwo->next;
+  }
+  // Node* result = new Node{sum, listSum(one,two)}
   Node *result = new Node;
   result->data = sum;
-  result->next = listSum(listOne->next, listTwo->next);
+  result->next = listSum(one, two);
   return result;
 }
 
-//   Task 2 function:
+//   Task 2 function
+//
+int treeMax(const TNode *root) {
+  if (root == nullptr)
+    throw invalid_argument("error");
+  int res = root->data;
+  if (root->right != nullptr)
+    res = max(res, treeMax(root->right));
+  if (root->left != nullptr)
+    res = max(res, treeMax(root->left));
+  if (root->mid != nullptr)
+    res = max(res, treeMax(root->mid));
+  return res;
+}
 
 //   Task 3 function:
+bool palindrome(const char letters[], int letLen) {
+  if (letLen > 1) {
+    if (letters[0] == letters[letLen - 1]) {
+      return palindrome(&letters[1], letLen - 2);
+    }
+    return false;
+  }
+  return true;
+}
 
 //   Task 4 function:
+// bool parity(unsigned num, int numOnes = 0) {
+bool parity(unsigned num) {
+  if (num < 2) {
+    if (num == 1)
+      return false;
+    return true;
+  }
+  if (num % 2 == 1)
+    return !(parity(num / 2));
+  return parity(num / 2);
+  // return parity(num / 2, numOnes);
+}
 
 //   Task 5 function:
+int towers(int i, char source, char target, char spare) {
+  if (i == 0)
+    return 0;
+  // return 1 + towers(i - 1, spare, source, target) +
+  // towers(i - 1, spare, target, source);
+  return towers(i - 1, source, spare, target) + 1 +
+         towers(i - 1, spare, target, source);
+}
 
 int main() {
   // We have provided some test code to save you time. Certainly feel
@@ -91,17 +145,21 @@ int main() {
   listClear(l5);
   listClear(l6);
 
-  /*
   // Task 2:
   cout << "\n==============\n"
        << "#2) Testing max of Tree.\n";
-  //TNode a{1}, b{2}, c{4}, d{-8, &a, &b, &c}, e{-16}, f{-32, &d, &e};
+  // TNode a{1}, b{2}, c{4}, d{-8, &a, &b, &c}, e{-16}, f{-32, &d, &e};
   TNode a{1}, b{20}, c{4}, d{-8, &a, &b, &c}, e{-16}, f{-32, &d, &e};
   cout << "treeMax(&f): " << treeMax(&f) << endl;
 
   // How do you keep this from crashing? try/catch! Here in main!
-  cout << treeMax(nullptr) << endl;
+  try {
+    cout << treeMax(nullptr) << endl;
+  }
 
+  catch (invalid_argument &e) {
+    cout << e.what();
+  }
 
   // Task 3:
   cout << "\n==============\n"
@@ -117,19 +175,16 @@ int main() {
        << "#4) Are there an even number of 1's in binary representation?\n";
   cout << boolalpha;
   for (int i = 0; i < 10; ++i) {
-      cout << i << ": " << parity(i) << endl;
+    cout << i << ": " << parity(i) << endl;
   }
-
-
 
   // Task 5:
   cout << "\n==============\n"
        << "#5) How many moves are required for various sized towers?";
   for (int i = 1; i < 30; ++i) {
-      cout << "towers(" << i << ", 'a', 'b', 'c'): "
-           << towers(i, 'a', 'b', 'c') << endl;
+    cout << "towers(" << i << ", 'a', 'b', 'c'): " << towers(i, 'a', 'b', 'c')
+         << endl;
   }
-*/
 }
 
 //
