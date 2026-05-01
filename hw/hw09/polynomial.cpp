@@ -14,11 +14,6 @@ using namespace std;
 Polynomial::Polynomial() : head(new Node{0, nullptr}), degree(0) {}
 
 Polynomial::Polynomial(const vector<int> &coef) : head(nullptr), degree(0) {
-  if (coef.size() == 0) {
-    head = new Node{0, nullptr};
-    return;
-  }
-
   size_t start = 0;
   while (start + 1 < coef.size() && coef[start] == 0) {
     ++start;
@@ -159,10 +154,6 @@ Polynomial &Polynomial::operator+=(const Polynomial &rhs) {
 }
 
 int Polynomial::evaluate(int x) const {
-  return eval(x);
-}
-
-int Polynomial::eval(int x) const {
   int result = 0;
   for (Node *curr = head; curr != nullptr; curr = curr->next) {
     result = result * x + curr->coef;

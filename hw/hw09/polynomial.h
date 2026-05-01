@@ -24,7 +24,6 @@ public:
   Polynomial &operator+=(const Polynomial &rhs);
 
   int evaluate(int x) const;
-  int eval(int x) const;
 
   bool operator==(const Polynomial &rhs) const;
   bool operator!=(const Polynomial &rhs) const;
